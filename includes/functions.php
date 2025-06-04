@@ -73,8 +73,10 @@ function usageWithinLimit() {
 	$oldyear = date("Y", $past);
 	$oldmonth = date("m", $past);
 	unset($usage[$oldyear][$oldmonth]);
-	if (count($usage[$oldyear]) == 0) {
-		unset($usage[$oldyear]);
+	if (isset($usage[$oldyear])) {
+		if (count($usage[$oldyear]) == 0) {
+			unset($usage[$oldyear]);
+		}
 	}
 	
 	//Check and store

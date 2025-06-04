@@ -15,7 +15,7 @@ $flickrApiSecret = '';
 //Config values.
 //Since early 2025, Flickr has been enforcing API usage limits. The documented limit is 3600 requests per hour.
 
-$site["URL"] = "https://my-website.com"; //Website URL
+$site["URL"] = "https://your-website.com"; //Website URL
 $site["folder"] = "/lf3/"; //Folder from website root.
 $site["cache"] = "cache/"; //Cache folder
 $site["maxFileSize"] = 250000000; //kb, maximum file size to process.
