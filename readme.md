@@ -31,7 +31,7 @@ The following parameters are accepted:
 - mode: How to match the tags. 'all' or 'any'. Default is 'any'.
 - lat: The latitude around which to look for images.
 - lng: The longitude around which to look for images.
-- radius: The radius around the location where to look for images.
+- radius: The radius around the location where to look for images. In kilometers. Default is 5, maximum is 32.
 - user: The user ID of the user you want to get results from. This looks like so: 78303790@N00.
 - filter: One of 'g', 'p', 'red', 'green', 'blue'. This adds a graphic filter to the image. This might not be supported by your server.
 - format: Whether you want an 'image', or 'json', Default is 'image'.
