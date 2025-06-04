@@ -44,6 +44,28 @@ If no images can be retrieved, the default image will be returned, which you can
 
 For more details, visit https://loremflickr.com
 
+## Locking
+
+You can have some control of the image that's displayed. Include a lock query string parameter and give it a value that's a positive integer. While the cache is not updated, and sometimes for longer, the same image will be returned.
+
+https://your-website.com/i/width-320/height-240?lock=212
+
+## Multiple images on the same page
+
+Your browser might cache the images when you request the same URL multiple times on the same page. You can resolve this by adding a meaningless querystring to the URL. So, for example...
+
+https://your-website.com/i/width-320/height-240?random=1
+
+https://your-website.com/i/width-320/height-240?random=2
+
+https://your-website.com/i/width-320/height-240?random=3
+
+## Previously
+
+Version 2 is available here: https://github.com/MastaBaba/LoremFlickr-2
+
+Version 1 is available here: https://github.com/MastaBaba/LoremFlickr
+
 ## Credits
 
 + LoremFlickr is maintained by Babak Fakhamzadeh, https://babakfakhamzadeh.com. On Flickr,  https://www.flickr.com/photos/mastababa/
