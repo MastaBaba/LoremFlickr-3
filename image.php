@@ -5,8 +5,8 @@ $configFile = dirname(__FILE__) . '/config.php';
 include $configFile;
 
 spl_autoload_register(function($className) {
-    $className = str_replace ('\\', DIRECTORY_SEPARATOR, $className);
-    include (dirname(__FILE__) . '/includes/' . $className . '.php');
+	$className = str_replace ('\\', DIRECTORY_SEPARATOR, $className);
+	include (dirname(__FILE__) . '/includes/' . $className . '.php');
 });
 
 use \DPZ\Flickr;
@@ -23,12 +23,11 @@ $values = array(
 	"user"		=> ""
 );
 foreach($_GET as $g) {
-	$ta = explode("-", $g);
-	if (count($ta) == 2) {
-		$t = $ta[0];
-		
-		if (in_array($t."-", $valids)) {
-			$values[$t] = $ta[1];
+	foreach($valids as $valid) {
+		$x = explode($valid, $g);
+
+		if (count($x) == 2) {
+			$values[substr($valid, 0, strlen($valid) - 1)] = $x[1];
 		}
 	}
 }
@@ -74,12 +73,12 @@ if (isset($values["width"]) && isset($values["height"])) {
 	$flickr = new Flickr($flickrApiKey, $flickrApiSecret);
 	
 	$parameters =  array(
-	    'per_page' => 100,
-	    'extras' => 'url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_k,url_h,url_o,path_alias,owner_name,license',
-	    'tag_mode' => $tagMode,
-	    'tags' => $tags,
-	    'license' => "1,2,3,4,5,6,7,8",
-	    'sort' => 'interestingness-desc'
+		'per_page' => 100,
+		'extras' => 'url_sq,url_t,url_s,url_q,url_m,url_n,url_z,url_c,url_l,url_k,url_h,url_o,path_alias,owner_name,license',
+		'tag_mode' => $tagMode,
+		'tags' => $tags,
+		'license' => "1,2,3,4,5,6,7,8",
+		'sort' => 'interestingness-desc'
 	);
 	
 	if ($values["user"] != "") {
@@ -94,8 +93,13 @@ if (isset($values["width"]) && isset($values["height"])) {
 	if ("".$values["radius"] != "") {
 		$parameters["radius"] = $values["radius"];
 	}
+	else {
+		if (isset($parameters["lat"]) && isset($parameters["lon"])) {
+			$parameters["radius"] = 32;
+		}
+	}
 
-	$searchHashed = $site["cacheSearch"].md5(print_r($values, true)).".txt";
+	$searchHashed = $site["cacheSearch"].md5(print_r($parameters, true)).".txt";
 	if (!file_exists($searchHashed)) {
 		if (usageWithinLimit()) {
 			$response = $flickr->call('flickr.photos.search', $parameters);
@@ -138,7 +142,7 @@ if (isset($values["width"]) && isset($values["height"])) {
 	
 	//Build the thumbnail
 	if(exif_imagetype($imageToUse) != IMAGETYPE_JPEG){
-	    $imageToUse = $defItU;
+		$imageToUse = $defItU;
 	}
 	
 	$i = imagecreatefromjpeg($imageToUse);
@@ -148,9 +152,9 @@ if (isset($values["width"]) && isset($values["height"])) {
 	$thumbnail = addFilter($thumbnail, $filter, $licenseToUse, $ownerToUse);
 	
 	if(is_null($thumbnail)) {
-	    // image creation or copying failed
-	    header('HTTP/1.1 500 Internal Server Error');
-	    exit();
+		// image creation or copying failed
+		header('HTTP/1.1 500 Internal Server Error');
+		exit();
 	}
 	
 	if ($format == "image") {
